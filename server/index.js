@@ -5,8 +5,9 @@ const cors = require("cors");
 
 const db = mysql.createPool({
   host: "localhost",
+  port: "3306",
   user: "root",
-  password: "1234",
+  password: "",
   database: "crud",
 });
 
@@ -15,30 +16,30 @@ app.use(cors());
 
 app.post("/register", (req, res) => {
   const { name } = req.body;
-  const { category } = req.body;
+  const { color } = req.body;
   const { style } = req.body;
 
-  let mysql = "INSERT INTO games ( name, category, style) VALUES (?, ?, ?)";
-  db.query(mysql, [name, category, style], (err, result) => {
+  let mysql = "INSERT INTO wines ( name, color, style) VALUES (?, ?, ?)";
+  db.query(mysql, [name, color, style], (err, result) => {
     res.send(result);
   });
 });
 
 app.post("/search", (req, res) => {
   const { name } = req.body;
-  const { category } = req.body;
+  const { color } = req.body;
   const { style } = req.body;
 
   let mysql =
-    "SELECT * from games WHERE name = ? AND category = ? AND style = ?";
-  db.query(mysql, [name, category, style], (err, result) => {
+    "SELECT * from wines WHERE vines = ? AND color = ? AND style = ?";
+  db.query(mysql, [name, color, style], (err, result) => {
     if (err) res.send(err);
     res.send(result);
   });
 });
 
 app.get("/getCards", (req, res) => {
-  let mysql = "SELECT * FROM games";
+  let mysql = "SELECT * FROM wines";
   db.query(mysql, (err, result) => {
     if (err) {
       console.log(err);
@@ -51,10 +52,10 @@ app.get("/getCards", (req, res) => {
 app.put("/edit", (req, res) => {
   const { id } = req.body;
   const { name } = req.body;
-  const { category } = req.body;
+  const { color } = req.body;
   const { style } = req.body;
-  let mysql = "UPDATE games SET name = ?, category = ?, style = ? WHERE id = ?";
-  db.query(mysql, [name, category, style, id], (err, result) => {
+  let mysql = "UPDATE wines SET name = ?, color = ?, style = ? WHERE id = ?";
+  db.query(mysql, [name, color, style, id], (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -65,7 +66,7 @@ app.put("/edit", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
-  let mysql = "DELETE FROM games WHERE id = ?";
+  let mysql = "DELETE FROM wines WHERE id = ?";
   db.query(mysql, id, (err, result) => {
     if (err) {
       console.log(err);
@@ -76,5 +77,5 @@ app.delete("/delete/:id", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("rodando na porta 3001");
+  console.log("rodando na porta 3001"); 
 });
