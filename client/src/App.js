@@ -11,20 +11,20 @@ export default function App() {
   const handleRegisterGame = () => {
     Axios.post("http://localhost:3001/register", {
       name: values.name,
-      category: values.category,
+      color: values.color,
       style: values.style,
     }).then(() => {
       Axios.post("http://localhost:3001/search", {
         name: values.name,
-        category: values.category,
+        color: values.color,
         style: values.style,
       }).then((response) => {
         setListCard([
           ...listCard,
           {
-            id: response.data[0].id,
+            id: values.id,
             name: values.name,
-            category: values.category,
+            color: values.color,
             style: values.style,
           },
         ]);
@@ -59,8 +59,8 @@ export default function App() {
         />
         <input
           type="text"
-          placeholder="Categoria do vinho"
-          name="category"
+          placeholder="Cor do vinho"
+          name="color"
           className="register-input"
           onChange={handleaddValues}
         />
@@ -84,7 +84,7 @@ export default function App() {
           key={val.id}
           id={val.id}
           name={val.name}
-          category={val.category}
+          color={val.color}
           style={val.style}
         />
       ))}
