@@ -11,7 +11,7 @@ export default function ModalForm(props) {
   const [editValues, setEditValues] = useState({
     id: props.id,
     name: props.title,
-    category: props.category,
+    color: props.color,
     style: props.style,
   });
 
@@ -30,7 +30,7 @@ export default function ModalForm(props) {
     Axios.put("http://localhost:3001/edit", {
       id: editValues.id,
       name: editValues.name,
-      category: editValues.category,
+      color: editValues.color,
       style: editValues.style,
     }).then(() => {
       props.setListCard(
@@ -39,7 +39,7 @@ export default function ModalForm(props) {
             ? {
                 id: editValues.id,
                 name: editValues.name,
-                category: editValues.category,
+                color: editValues.color,
                 style: editValues.style,
               }
             : value;
@@ -61,7 +61,7 @@ export default function ModalForm(props) {
   };
 
   return (
-    <div>
+    <div className="modal">
       <Dialog
         open={props.open}
         onClose={handleClose}
@@ -69,15 +69,6 @@ export default function ModalForm(props) {
       >
         <DialogTitle id="form-dialog-title">Editar</DialogTitle>
         <DialogContent>
-          <TextField
-            disabled
-            margin="dense"
-            id="id"
-            label="id"
-            defaultValue={props.id}
-            type="text"
-            fullWidth
-          />
           <TextField
             autoFocus
             margin="dense"
@@ -91,10 +82,10 @@ export default function ModalForm(props) {
           <TextField
             autoFocus
             margin="dense"
-            id="category"
-            label="Categoria do vinho"
-            defaultValue={props.category}
-            type="number"
+            id="color"
+            label="Cor do vinho"
+            defaultValue={props.color}
+            type="text"
             onChange={handleChangeValues}
             fullWidth
           />
@@ -113,7 +104,7 @@ export default function ModalForm(props) {
           <Button onClick={handleClose}>
             Cancel
           </Button>
-          <Button color="primary" onClick={() => handleDeleteGame()}>
+          <Button color="secondary" onClick={() => handleDeleteGame()}>
             Excluir
           </Button>
           <Button color="primary" onClick={() => handleEditGame()}>
